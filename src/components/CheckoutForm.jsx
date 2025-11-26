@@ -10,7 +10,10 @@ export default function CheckoutForm({ customer, onChange }) {
       <div className="card-header bg-secondary text-white">
         Tus datos
       </div>
+
       <div className="card-body">
+
+        {/* Nombre */}
         <div className="mb-3">
           <label className="form-label">Nombre</label>
           <input
@@ -22,10 +25,10 @@ export default function CheckoutForm({ customer, onChange }) {
             placeholder="Ej: Mariano"
           />
         </div>
+
+        {/* Dirección */}
         <div className="mb-3">
-          <label className="form-label">
-            Dirección (si es delivery)
-          </label>
+          <label className="form-label">Dirección (si es delivery)</label>
           <input
             type="text"
             className="form-control"
@@ -35,10 +38,10 @@ export default function CheckoutForm({ customer, onChange }) {
             placeholder="Calle, número, barrio"
           />
         </div>
+
+        {/* Teléfono */}
         <div className="mb-3">
-          <label className="form-label">
-            Teléfono (opcional)
-          </label>
+          <label className="form-label">Teléfono (opcional)</label>
           <input
             type="text"
             className="form-control"
@@ -48,6 +51,8 @@ export default function CheckoutForm({ customer, onChange }) {
             placeholder="Ej: 11 1234-5678"
           />
         </div>
+
+        {/* Entrega */}
         <div className="mb-3">
           <label className="form-label">Entrega</label>
           <select
@@ -60,7 +65,9 @@ export default function CheckoutForm({ customer, onChange }) {
             <option value="Retiro en local">Retiro en local</option>
           </select>
         </div>
-        <div>
+
+        {/* Medio de pago */}
+        <div className="mb-3">
           <label className="form-label">Medio de pago</label>
           <select
             className="form-select"
@@ -73,6 +80,20 @@ export default function CheckoutForm({ customer, onChange }) {
             <option value="Mercado Pago">Mercado Pago</option>
           </select>
         </div>
+
+        {/* 🆕 Comentarios */}
+        <div className="mb-3">
+          <label className="form-label">Comentarios (opcional)</label>
+          <textarea
+            className="form-control"
+            name="comments"
+            rows="3"
+            placeholder="Ej: sin cebolla, cortar en 8, traer cambio..."
+            value={customer.comments}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+
       </div>
     </div>
   );

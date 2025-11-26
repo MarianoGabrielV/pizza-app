@@ -1,7 +1,7 @@
 // src/components/Menu.jsx
 import { pizzas, empanadas, bebidas, postres } from "../data/pizzeriaProducts";
 
-export default function Menu({ onAddToCart }) {
+export default function Menu({ onAddToCart, isClosed }) {
   const renderCategory = (title, items, isFirst = false) => (
     <>
       <h3
@@ -45,8 +45,9 @@ export default function Menu({ onAddToCart }) {
                       <button
                         className="btn btn-success btn-sm"
                         onClick={() => onAddToCart(item)}
+                        disabled={isClosed}
                       >
-                        Agregar
+                        {isClosed ? "Cerrado" : "Agregar"}
                       </button>
                     </div>
                   </div>
@@ -60,7 +61,7 @@ export default function Menu({ onAddToCart }) {
   );
 
   return (
-    <section id="menu" className="py-0 bg-light">
+    <section id="menu" className="py-4 bg-light">
       <div className="container-fluid px-4 px-lg-5">
         <h2 className="mb-3 text-center">Menú</h2>
 
