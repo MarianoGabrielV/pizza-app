@@ -2,9 +2,13 @@
 import { pizzas, empanadas, bebidas, postres } from "../data/pizzeriaProducts";
 
 export default function Menu({ onAddToCart }) {
-  const renderCategory = (title, items) => (
+  const renderCategory = (title, items, isFirst = false) => (
     <>
-      <h3 className="mt-5 mb-3 text-center">{title}</h3>
+      <h3
+        className={`mb-3 text-center ${isFirst ? "mt-3" : "mt-5"}`}
+      >
+        {title}
+      </h3>
 
       <div className="row g-4">
         {items.map((item) => (
@@ -56,11 +60,11 @@ export default function Menu({ onAddToCart }) {
   );
 
   return (
-    <section id="menu" className="py-5 bg-light">
+    <section id="menu" className="py-0 bg-light">
       <div className="container-fluid px-4 px-lg-5">
-        <h2 className="mb-4 text-center">Menú</h2>
+        <h2 className="mb-3 text-center">Menú</h2>
 
-        {renderCategory("Pizzas", pizzas)}
+        {renderCategory("Pizzas", pizzas, true)}
         {renderCategory("Empanadas", empanadas)}
         {renderCategory("Bebidas", bebidas)}
         {renderCategory("Postres", postres)}
