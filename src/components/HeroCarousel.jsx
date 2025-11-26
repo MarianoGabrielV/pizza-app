@@ -1,8 +1,31 @@
 // src/components/HeroCarousel.jsx
+import { clientConfig } from "../config/clientConfig";
 
 export default function HeroCarousel() {
+  const { hero, nombre } = clientConfig;
+
+  // Imagen de fondo: si no hay en config, usamos la de Pexels
+  const imageSrc =
+    hero?.fondo ||
+    "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg";
+
+  // Textos con fallback: si no hay en config, usamos los que ya tenías
+  const slide1Title = hero?.slides?.[0]?.titulo || `${nombre} 🍕`;
+  const slide1Subtitle =
+    hero?.slides?.[0]?.subtitulo ||
+    "Pedí tus pizzas favoritas y mandá el pedido por WhatsApp.";
+
+  const slide2Title = hero?.slides?.[1]?.titulo || "Horno a la piedra";
+  const slide2Subtitle =
+    hero?.slides?.[1]?.subtitulo ||
+    "Masa casera, ingredientes frescos, sabor brutal.";
+
+  const slide3Title = hero?.slides?.[2]?.titulo || "Promos todos los días";
+  const slide3Subtitle =
+    hero?.slides?.[2]?.subtitulo || "2x1, combos familiares y mucho más.";
+
   return (
-    <section className="bg-dark">
+    <section id="hero" className="bg-dark">
       <div className="container-fluid px-0">
         <div
           id="heroCarousel"
@@ -10,46 +33,45 @@ export default function HeroCarousel() {
           data-bs-ride="carousel"
         >
           <div className="carousel-inner">
-
             {/* Slide 1 */}
             <div className="carousel-item active">
               <img
-                src="https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg"
+                src={imageSrc}
                 className="d-block w-100"
-                alt="Pizza de muzzarella"
+                alt="Slide 1"
                 style={{ maxHeight: "520px", objectFit: "cover" }}
               />
               <div className="carousel-caption d-none d-md-block">
-                <h2 className="fw-bold text-shadow">Pizzería Reacta 🍕</h2>
-                <p>Pedí tus pizzas favoritas y mandá el pedido por WhatsApp.</p>
+                <h2 className="fw-bold text-shadow">{slide1Title}</h2>
+                <p>{slide1Subtitle}</p>
               </div>
             </div>
 
             {/* Slide 2 */}
             <div className="carousel-item">
               <img
-                src="https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg"
+                src={imageSrc}
                 className="d-block w-100"
-                alt="Pizza especial"
+                alt="Slide 2"
                 style={{ maxHeight: "520px", objectFit: "cover" }}
               />
               <div className="carousel-caption d-none d-md-block">
-                <h2 className="fw-bold text-shadow">Horno a la piedra</h2>
-                <p>Masa casera, ingredientes frescos, sabor brutal.</p>
+                <h2 className="fw-bold text-shadow">{slide2Title}</h2>
+                <p>{slide2Subtitle}</p>
               </div>
             </div>
 
             {/* Slide 3 */}
             <div className="carousel-item">
               <img
-                src="https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg"
+                src={imageSrc}
                 className="d-block w-100"
-                alt="Porción de pizza"
+                alt="Slide 3"
                 style={{ maxHeight: "520px", objectFit: "cover" }}
               />
               <div className="carousel-caption d-none d-md-block">
-                <h2 className="fw-bold text-shadow">Promos todos los días</h2>
-                <p>2x1, combos familiares y mucho más.</p>
+                <h2 className="fw-bold text-shadow">{slide3Title}</h2>
+                <p>{slide3Subtitle}</p>
               </div>
             </div>
           </div>

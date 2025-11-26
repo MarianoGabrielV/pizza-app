@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import HeroCarousel from "./components/HeroCarousel";
@@ -6,7 +7,7 @@ import Cart from "./components/Cart";
 import CheckoutForm from "./components/CheckoutForm";
 import WhatsAppButton from "./components/WhatsAppButton";
 import UpsellModal from "./components/UpsellModal";
-import { products } from "./data/products";
+import { bebidas, postres } from "./data/pizzeriaProducts";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -22,9 +23,7 @@ function App() {
   const [showUpsell, setShowUpsell] = useState(false);
 
   // productos que vamos a sugerir (bebidas y postres)
-  const upsellItems = products.filter(
-    (p) => p.category === "Bebidas" || p.category === "Postres"
-  );
+  const upsellItems = [...bebidas, ...postres];
 
   const addToCart = (product, { fromUpsell = false } = {}) => {
     setCart((prev) => {
@@ -56,10 +55,7 @@ function App() {
     );
   };
 
-  const total = cart.reduce(
-    (sum, item) => sum + item.price * item.qty,
-    0
-  );
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   // agregar desde el modal de upsell
   const handleAddFromUpsell = (product) => {
@@ -71,7 +67,8 @@ function App() {
       <Navbar />
       <HeroCarousel />
 
-      <main className="py-5" id="pedido">
+      {/* margen top para que no lo tape el navbar fijo */}
+      <main className="py-5" id="pedido" style={{ marginTop: "80px" }}>
         <div className="container-fluid px-4 px-lg-5">
           <div className="row">
             {/* Menú */}
@@ -80,31 +77,32 @@ function App() {
             </div>
 
             {/* Carrito + datos + botón WhatsApp */}
-            <div className="col-12 col-lg-5">
+            <section id="cart" className="col-12 col-lg-5">
               <Cart
                 cart={cart}
                 total={total}
                 onRemove={removeFromCart}
                 onChangeQty={changeQty}
               />
-              <CheckoutForm
-                customer={customer}
-                onChange={setCustomer}
-              />
-              <WhatsAppButton
-                cart={cart}
-                total={total}
-                customer={customer}
-              />
-            </div>
+              <CheckoutForm customer={customer} onChange={setCustomer} />
+              <WhatsAppButton cart={cart} total={total} customer={customer} />
+            </section>
           </div>
         </div>
       </main>
 
       <footer className="bg-dark text-light text-center py-3 mt-auto">
         <small>
-          © {new Date().getFullYear()} Pizzería Reacta - Hecho con React
-          &amp; Bootstrap
+          © {new Date().getFullYear()}{" "}
+          Desarrollado por{" "}
+          <a
+            href="https://magozitsolutions.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-decoration-none text-info"
+          >
+            MagoZ IT Solutions
+          </a>
         </small>
       </footer>
 
