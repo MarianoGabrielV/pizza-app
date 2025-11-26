@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import HeroCarousel from "./components/HeroCarousel";
@@ -6,6 +5,8 @@ import Menu from "./components/Menu";
 import Cart from "./components/Cart";
 import CheckoutForm from "./components/CheckoutForm";
 import WhatsAppButton from "./components/WhatsAppButton";
+import UpsellModal from "./components/UpsellModal";
+import { products } from "./data/products";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -17,18 +18,29 @@ function App() {
     paymentMethod: "Efectivo",
   });
 
-  const addToCart = (pizza) => {
+  // estado para el modal de sugerencias
+  const [showUpsell, setShowUpsell] = useState(false);
+
+  // productos que vamos a sugerir (bebidas y postres)
+  const upsellItems = products.filter(
+    (p) => p.category === "Bebidas" || p.category === "Postres"
+  );
+
+  const addToCart = (product, { fromUpsell = false } = {}) => {
     setCart((prev) => {
-      const existing = prev.find((item) => item.id === pizza.id);
+      const existing = prev.find((item) => item.id === product.id);
       if (existing) {
         return prev.map((item) =>
-          item.id === pizza.id
-            ? { ...item, qty: item.qty + 1 }
-            : item
+          item.id === product.id ? { ...item, qty: item.qty + 1 } : item
         );
       }
-      return [...prev, { ...pizza, qty: 1 }];
+      return [...prev, { ...product, qty: 1 }];
     });
+
+    // Si es una pizza y NO viene desde el modal, abrimos las sugerencias
+    if (product.category === "Pizzas" && !fromUpsell) {
+      setShowUpsell(true);
+    }
   };
 
   const removeFromCart = (id) => {
@@ -49,19 +61,25 @@ function App() {
     0
   );
 
+  // agregar desde el modal de upsell
+  const handleAddFromUpsell = (product) => {
+    addToCart(product, { fromUpsell: true });
+  };
+
   return (
     <div className="bg-body-tertiary min-vh-100">
       <Navbar />
-        <HeroCarousel />
+      <HeroCarousel />
+
       <main className="py-5" id="pedido">
-          <div className="container-fluid px-4 px-lg-5">
-            <div className="row">
-            {/* Menú en la izquierda, ocupa más espacio en desktop */}
+        <div className="container-fluid px-4 px-lg-5">
+          <div className="row">
+            {/* Menú */}
             <div className="col-12 col-lg-7 mb-4 mb-lg-0">
               <Menu onAddToCart={addToCart} />
             </div>
 
-            {/* Carrito + formulario a la derecha */}
+            {/* Carrito + datos + botón WhatsApp */}
             <div className="col-12 col-lg-5">
               <Cart
                 cart={cart}
@@ -85,9 +103,18 @@ function App() {
 
       <footer className="bg-dark text-light text-center py-3 mt-auto">
         <small>
-          © {new Date().getFullYear()} Pizzería - Hecho por MaGozItSolutions
+          © {new Date().getFullYear()} Pizzería Reacta - Hecho con React
+          &amp; Bootstrap
         </small>
       </footer>
+
+      {/* Modal de sugerencias */}
+      <UpsellModal
+        show={showUpsell}
+        onClose={() => setShowUpsell(false)}
+        upsellItems={upsellItems}
+        onAdd={handleAddFromUpsell}
+      />
     </div>
   );
 }
