@@ -22,7 +22,8 @@ export default function HeroCarousel() {
 
   const slide3Title = hero?.slides?.[2]?.titulo || "Promos todos los días";
   const slide3Subtitle =
-    hero?.slides?.[2]?.subtitulo || "2x1, combos familiares y mucho más.";
+    hero?.slides?.[2]?.subtitulo || 
+    "2x1, combos individuales, familiares y mucho más.";
 
   return (
     <section id="hero" className="bg-dark">
