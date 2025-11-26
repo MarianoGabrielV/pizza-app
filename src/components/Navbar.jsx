@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { clientConfig } from "../config/clientConfig";
 
-export default function Navbar() {
+export default function Navbar({ cartCount }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -50,12 +50,17 @@ export default function Navbar() {
 
         {/* Botón hamburguesa móvil (controlado por React) */}
         <button
-          className="navbar-toggler"
+          className="navbar-toggler position-relative"
           type="button"
           aria-label="Toggle navigation"
           onClick={handleToggle}
         >
           <span className="navbar-toggler-icon" />
+          {cartCount > 0 && (
+            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+              {cartCount}
+            </span>
+          )}
         </button>
 
         {/* Links */}
@@ -75,11 +80,16 @@ export default function Navbar() {
             </li>
             <li className="nav-item">
               <a
-                className="nav-link text-light"
+                className="nav-link text-light d-flex align-items-center"
                 href="#cart"
                 onClick={handleNavClick}
               >
-                Mi pedido
+                <span>Mi pedido</span>
+                {cartCount > 0 && (
+                  <span className="badge bg-success ms-2">
+                    {cartCount}
+                  </span>
+                )}
               </a>
             </li>
           </ul>

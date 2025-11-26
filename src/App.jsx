@@ -57,6 +57,9 @@ function App() {
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
+  // cantidad total de items en el carrito (suma de qty)
+  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
+
   // agregar desde el modal de upsell
   const handleAddFromUpsell = (product) => {
     addToCart(product, { fromUpsell: true });
@@ -64,7 +67,8 @@ function App() {
 
   return (
     <div className="bg-body-tertiary min-vh-100">
-      <Navbar />
+      {/* Pasamos cartCount al Navbar */}
+      <Navbar cartCount={cartCount} />
       <HeroCarousel />
 
       {/* margen top para que no lo tape el navbar fijo */}
